@@ -1,0 +1,27 @@
+class Solution {
+public:              
+        
+    vector<vector<int>> allCellsDistOrder(int R, int C, int r0, int c0) {
+            
+            vector<vector<int>> cells;
+            for(int i=0;i<R;i++)
+            {
+                    for(int j=0;j<C;j++)                    
+                            cells.push_back(vector<int>{i,j});                    
+            }
+        
+            sort(cells.begin(), cells.end(), bind(&Solution::doCompare, this, r0, c0, placeholders::_1, placeholders::_2));
+            
+            return cells;
+            
+    }
+private:
+        
+    bool doCompare(int r0, int c0, const vector<int>& lhs, const vector<int>& rhs) {
+        return distance(r0, c0, lhs[0], lhs[1]) < distance(r0, c0, rhs[0], rhs[1]);
+    }
+    
+    int distance(int r1, int c1, int r2, int c2) {
+        return abs(r1 - r2) + abs(c1 - c2);
+    }
+};
